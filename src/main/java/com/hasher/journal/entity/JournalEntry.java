@@ -28,5 +28,6 @@ public class JournalEntry {
 
     @ManyToOne
     @JoinColumn(name = "user_id") // foreign key
+    @JsonBackReference
     private User user;
 }

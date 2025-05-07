@@ -3,6 +3,8 @@ package com.hasher.journal.service;
 import com.hasher.journal.entity.User;
 import com.hasher.journal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,7 +16,18 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+
     // saveEntry
+    public void saveNewUser(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(List.of ("USER"));
+        userRepository.save(user);
+    }
+
+    // saveUser
     public void saveUser(User user){
         userRepository.save(user);
     }
@@ -35,8 +48,14 @@ public class UserService {
     }
 
     // findByUserName
-
-    public User findByUser(String user) {
+    public User findByUserName(String user) {
         return userRepository.findByUserName(user);
+    }
+
+    // Create Admin
+    public void addNewAdmin(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(List.of ("USER", "ADMIN"));
+        userRepository.save(user);
     }
 }

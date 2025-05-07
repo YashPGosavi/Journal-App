@@ -28,6 +28,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    private List<JournalEntry> journalEntryList = new ArrayList<>();
+    private List<JournalEntry> journalEntries = new ArrayList<>();
+
+    private List<String> roles = new ArrayList<>();;
 }

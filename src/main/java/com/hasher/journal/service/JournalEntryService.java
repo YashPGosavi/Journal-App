@@ -1,6 +1,7 @@
 package com.hasher.journal.service;
 
 import com.hasher.journal.entity.JournalEntry;
+import com.hasher.journal.entity.User;
 import com.hasher.journal.repository.JournalEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,9 @@ public class JournalEntryService {
     private JournalEntryRepository journalEntryRepository;
 
     // saveEntry
-    public void saveEntry(JournalEntry myEntry){
+    public void saveEntry(JournalEntry myEntry, User user){
         myEntry.setDateTime(LocalDateTime.now());
+        myEntry.setUser(user);
         journalEntryRepository.save(myEntry);
     }
 
@@ -35,4 +37,11 @@ public class JournalEntryService {
     public void deleteById(Long myId){
         journalEntryRepository.deleteById(myId);
     }
+
+    // getAllEntries
+//
+//    public List<JournalEntry> findByUserName(String userName){
+//        return
+//    }
+
 }
